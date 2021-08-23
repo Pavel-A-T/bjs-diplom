@@ -35,15 +35,20 @@ logoutButton.action = (data) => {
 };
 
 //Получение курсов валют и построение таблицы
-setInterval(() => ApiConnector.getStocks((response) => {
+function getCurrencyRate() {
+    ApiConnector.getStocks((response) => {
         if (response.success === true) {
             rateBoard.clearTable();
             rateBoard.fillTable(response.data);
         } else {
             console.error("Ошибка получения курсов валют");
         }
-    }),
-    60000);
+    });
+}
+
+getCurrencyRate();
+
+setInterval(getCurrencyRate(), 60000);
 
 moneyManager.addMoneyCallback = ((data) => {
     ApiConnector.addMoney(data, (response) => {
@@ -78,7 +83,7 @@ favoritesWidget.addUserCallback = ((data) => {
             favoritesWidget.clearTable();
             favoritesWidget.fillTable(response.data);
             moneyManager.updateUsersList(response.data);
-            favoritesWidget.setMessage(true, message);
+            favoritesWidget.setMessage(true, 'Пользователь был успешно добавлен.');
         } else {
             favoritesWidget.setMessage(false, `Произошла ошибка ${response.error}`);
         }
@@ -91,7 +96,7 @@ favoritesWidget.removeUserCallback = ((data) => {
             favoritesWidget.clearTable();
             favoritesWidget.fillTable(response.data);
             moneyManager.updateUsersList(response.data);
-            favoritesWidget.setMessage(true, message);
+            favoritesWidget.setMessage(true, 'Пользователь был успешно удалён.');
         } else {
             favoritesWidget.setMessage(false, `Произошла ошибка ${response.error}`);
         }

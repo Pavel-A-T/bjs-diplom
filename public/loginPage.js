@@ -5,11 +5,11 @@ let userForm = new UserForm();
 
 userForm.loginFormCallback = (data) => {
     ApiConnector.login(data, (response)=>{
-        if (response.sucsess === true) {
+        if (response.success === true) {
             location.reload();
         }
         else {
-            console.error(`Произошла ошибка: ${response.error}`);
+            userForm.setLoginErrorMessage(`Произошла ошибка: ${response.error}`);
         }
     });
 };
@@ -21,7 +21,7 @@ userForm.registerFormCallback = (data) => {
            location.reload();
        }
        else {
-           console.error(`Произошла ошибка регистрации пользователя ${data.login}: ${response.error}`);
+           userForm.setLoginErrorMessage(`Произошла ошибка регистрации пользователя ${data.login}: ${response.error}`);
        }
     });
 }
