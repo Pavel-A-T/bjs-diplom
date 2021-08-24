@@ -24,8 +24,8 @@ let current = ApiConnector.current((response) => {
 });
 
 //Разлогинивание
-logoutButton.action = (data) => {
-    ApiConnector.logout(data, (response) => {
+logoutButton.action = () => {
+    ApiConnector.logout((response) => {
         if (response.success === true) {
             location.reload();
         } else {
